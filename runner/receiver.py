@@ -8,6 +8,8 @@ import numpy as np
 from gamer.gamer import Game
 from input_aggregator.aggregator import Aggregator
 
+from lexical import KINGDOMS_NAME
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     required = parser.add_argument_group('required arguments')

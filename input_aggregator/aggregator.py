@@ -27,8 +27,8 @@ class Aggregator(object):
                         digest[collected.keys()[0]] = collected.values()[0]
 
             for key in digest.keys():
-                digest[key] = digest[key].mean(axis=0)
-
+                if digest[key].shape.__len__() > 1:
+                    digest[key] = digest[key].mean(axis=0)
             return digest
 
         return None

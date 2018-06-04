@@ -61,7 +61,6 @@ if __name__ == "__main__":
             received = chatstream.twitch_receive_messages()
 
             digest = Aggregator.process_received_messages(received=received)
-
             Game.get_updated(digest)
 
             frame = Game.get_frame_from_game_state()

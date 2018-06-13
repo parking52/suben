@@ -9,7 +9,7 @@ class Aggregator(object):
 
         digest = {}
         # for name in KINGDOMS_NAME:
-            # digest[name] = np.array([33,33,34])
+            # digest[name] = np.array([33,33,34,0])
 
         if received:
             for chat_message in received:
@@ -36,13 +36,13 @@ class Aggregator(object):
     def process_single_message(self, message):
 
         split_message = message.split(' ')
-        if not split_message.__len__() == 4:
+        if not split_message.__len__() == 5:
             return None
         if not split_message[0] in KINGDOMS_NAME:
             return None
         try:
             dict = {}
-            dict[split_message[0]] = np.array([int(split_message[i]) for i in [1,2,3]])
+            dict[split_message[0]] = np.array([int(split_message[i]) for i in [1,2,3,4]])
         except ValueError:
             return None
 

@@ -18,14 +18,14 @@ class TestAggregator(TestCase):
         expected_output = None
         assert actual_output == expected_output
 
-        single_message = {'message': 'Raed 33 33 33', 'username': 'u2'}
+        single_message = {'message': 'Raed 25 25 25 25 ', 'username': 'u2'}
         actual_output = self.agg.process_single_message(single_message['message'])
         expected_output = None
         assert actual_output == expected_output
 
-        single_message = {'message': 'Raed 33 33 34', 'username': 'u2'}
+        single_message = {'message': 'Raed 25 25 25 25', 'username': 'u2'}
         actual_output = self.agg.process_single_message(single_message['message'])
-        expected_output = {'Raed': np.array([33, 33, 34])}
+        expected_output = {'Raed': np.array([25, 25, 25, 25])}
         assert actual_output.keys() == expected_output.keys()
         np.testing.assert_almost_equal(actual_output.values(), expected_output.values())
 
@@ -33,11 +33,11 @@ class TestAggregator(TestCase):
     def test_process_received_messages(self):
 
         sample_to_be_processed = [
-            {'message': 'Raed 50 50 0', 'username': 'ccc'},
+            {'message': 'Raed 50 50 0 0', 'username': 'ccc'},
         ]
         actual_output = self.agg.process_received_messages(sample_to_be_processed)
         expected_output = {
-            'Raed': np.array([50,50,0]),
+            'Raed': np.array([50,50,0,0]),
         }
         assert actual_output.keys() == expected_output.keys()
         np.testing.assert_almost_equal(actual_output.values(), expected_output.values())
@@ -45,14 +45,14 @@ class TestAggregator(TestCase):
 
 
         sample_to_be_processed = [
-            {'message': 'Dyr 50 50 50', 'username': 'ccc'}, # incorrect
-            {'message': 'Dyr 50 50 0', 'username': 'ccc'},
-            {'message': 'Dyr 70 30 0', 'username': 'ccc'},
-            {'message': 'Dyr 0 40 60', 'username': 'ccc'},
+            {'message': 'Dyr 50 50 50 0', 'username': 'ccc'}, # incorrect
+            {'message': 'Dyr 50 50 0 0', 'username': 'ccc'},
+            {'message': 'Dyr 70 30 0 0', 'username': 'ccc'},
+            {'message': 'Dyr 0 40 60 0', 'username': 'ccc'},
         ]
         actual_output = self.agg.process_received_messages(sample_to_be_processed)
         expected_output = {
-            'Dyr': np.array([40,40,20]),
+            'Dyr': np.array([40,40,20,0]),
         }
         assert actual_output.keys() == expected_output.keys()
         np.testing.assert_almost_equal(actual_output.values(), expected_output.values())
@@ -60,18 +60,18 @@ class TestAggregator(TestCase):
 
 
         sample_to_be_processed = [
-            {'message': 'Dyr 40 40 20', 'username': 'ccc'},
-            {'message': 'Dyr 20 20 60', 'username': 'ccc'},
-            {'message': 'Raed 40 40 20', 'username': 'ccc'},
-            {'message': 'Raed 20 20 60', 'username': 'ccc'},
-            {'message': 'Riki 40 40 20', 'username': 'ccc'},
-            {'message': 'Riki 20 20 60', 'username': 'ccc'},
+            {'message': 'Dyr 40 40 20 0', 'username': 'ccc'},
+            {'message': 'Dyr 20 20 60 0', 'username': 'ccc'},
+            {'message': 'Raed 40 40 20 0', 'username': 'ccc'},
+            {'message': 'Raed 20 20 60 0', 'username': 'ccc'},
+            {'message': 'Riki 40 40 20 0', 'username': 'ccc'},
+            {'message': 'Riki 20 20 60 0', 'username': 'ccc'},
         ]
         actual_output = self.agg.process_received_messages(sample_to_be_processed)
         expected_output = {
-            'Riki': np.array([30, 30, 40]),
-            'Dyr': np.array([30, 30, 40]),
-            'Raed': np.array([30, 30, 40]),
+            'Riki': np.array([30, 30, 40, 0]),
+            'Dyr': np.array([30, 30, 40, 0]),
+            'Raed': np.array([30, 30, 40, 0]),
         }
         assert actual_output.keys() == expected_output.keys()
         np.testing.assert_almost_equal(actual_output.values(), expected_output.values())

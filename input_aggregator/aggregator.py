@@ -19,34 +19,28 @@ class Aggregator(object):
                 ))
                 collected = self.process_single_message(chat_message['message'])
 
-                if collected:
-
-                    try:
-                        digest[collected.keys()[0]] = np.vstack((digest[collected.keys()[0]], collected.values()[0]))
-                    except KeyError:
-                        digest[collected.keys()[0]] = collected.values()[0]
-
-            for key in digest.keys():
-                if digest[key].shape.__len__() > 1:
-                    digest[key] = digest[key].mean(axis=0)
-            return digest
+            #     if collected:
+            #
+            #         try:
+            #             digest[collected.keys()[0]] = np.vstack((digest[collected.keys()[0]], collected.values()[0]))
+            #         except KeyError:
+            #             digest[collected.keys()[0]] = collected.values()[0]
+            #
+            # for key in digest.keys():
+            #     if digest[key].shape.__len__() > 1:
+            #         digest[key] = digest[key].mean(axis=0)
+            return collected
 
         return None
 
     def process_single_message(self, message):
 
-        split_message = message.split(' ')
-        if not split_message.__len__() == 5:
-            return None
-        if not split_message[0] in KINGDOMS_NAME:
-            return None
-        try:
-            dict = {}
-            dict[split_message[0]] = np.array([int(split_message[i]) for i in [1,2,3,4]])
-        except ValueError:
-            return None
+        print(message)
 
-        if dict.values()[0].sum() == 100:
-            return dict
-        else:
-            return None
+        direction = message
+
+        if direction in ['up','down','right','left']:
+            # print(direction)
+            return direction
+
+        return None
